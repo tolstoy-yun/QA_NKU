@@ -2,7 +2,7 @@ from py2neo import Graph, Node, Relationship,NodeMatcher
 
 class Create_Graph:
     graph=None
-    triple_dir="./triple/"
+    triple_dir="./triple/" # 存放三元组的路径
 
     def __init__(self):
         #与neo4j建立连接
@@ -19,6 +19,10 @@ class Create_Graph:
             for line in f.readlines():
                 rela_array=line.strip("\n").split(",")
                 print(rela_array)
+                """
+                将每一个三元组x,y,z放入neo4j图数据库中，x为subject节点，y为关系relation，z为object节点
+                x指向y，两者的关系为z
+                """
                 try:
                     self.graph.run("MERGE(p: Subject{Name: '%s'})"%(rela_array[0]))
                     self.graph.run("MERGE(p: Object{Name: '%s'})" % (rela_array[2]))
