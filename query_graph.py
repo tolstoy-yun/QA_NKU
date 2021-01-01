@@ -6,7 +6,7 @@ from triple_extraction import*
 
 class Query_Graph:
     graph=None
-    extra=TripleExtractor()
+    extra=TripleExtractor() #用于将查询语句解析为三元组
 
     def __init__(self):
         #与neo4j建立连接
@@ -17,9 +17,10 @@ class Query_Graph:
         )
     #查询
     def query(self,sentence):
+        #疑问词列表
         query_word=["哪","什么","呢","吗","谁","怎么样","怎么","如何","多久","多少"]
         query_sentence = re.sub(r"[{}]+".format(punctuation), "", sentence)  # 将标点符号转化为空格
-        #print(query_sentence)
+        #将查询语句转换为三元组
         svos=self.extra.triples_main(query_sentence)
         #print(svos)
         query_type=0 #问句类型，1为主谓问宾语，2为谓宾问主语，0为其他无法回答的问题
